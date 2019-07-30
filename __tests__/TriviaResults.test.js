@@ -8,6 +8,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 
 import { TriviaResultsWithoutHocs } from '../src/screens/TriviaResults';
 import { QUERY_GET_TRIVIA, GET_ANSWERS } from '../src/apollo/queries';
+import { WIPEOUT_ANSWERS } from '../src/apollo/mutations';
 
 
 describe('TriviaResults screen', () => {
@@ -45,8 +46,29 @@ describe('TriviaResults screen', () => {
               result: {
                 data: {
                     getTrivia: fakeResults(),
+
                 },
               },
+            },
+            {
+                request: {
+                  query: GET_ANSWERS
+                },
+                result: {
+                  data: {
+                      userAnswers: [false, true]
+                  },
+                },
+            },
+            {
+                request: {
+                  query: WIPEOUT_ANSWERS
+                },
+                result: {
+                  data: {
+                      wipeOutAnswers: null,
+                  },
+                },
             },
         ];
 
@@ -61,12 +83,6 @@ describe('TriviaResults screen', () => {
     });
 
     it('renders results', async () => {
-        await this.cache.writeQuery({
-            query: GET_ANSWERS,
-            data: {
-              userAnswers: ["False", "True"]
-            }
-        });
     
         const screen = renderer.create(
             <MockedProvider mocks={this.mocks} addTypename={false}>
@@ -74,11 +90,37 @@ describe('TriviaResults screen', () => {
             </MockedProvider>
         )
         await wait(0);
-        console.log(screen.root.findAllByType(Text))
+
+        expect(screen.root.findAllByType(Text)[0].props.children)
+            .toContain("Results");
+        expect(screen.root.findAllByType(Text)[1].props.children)
+            .toBe("1/2")
+
+        expect(screen.root.findAllByType(Text)[2].props.children)
+            .toContain("WRONG");
+        expect(screen.root.findAllByType(Text)[4].props.children)
+            .toContain("RIGHT");
+
+        expect(screen.root.findAllByType(Text)[3].props.children)
+            .toContain("Japan was part of the Allied Powers during World War I")
+        expect(screen.root.findAllByType(Text)[5].props.children)
+            .toContain("Salvador was originally from Spain?")
+        
+        expect(screen.root.findAllByType(TouchableHighlight)[0].props.children.props.children)
+            .toContain('Try Again')
+        
     });
 
-    // it('navigates back to the beginning', () => {
-
-    // });
+    it('navigates back to the beginning', async () => {
+        const screen = renderer.create(
+            <MockedProvider mocks={this.mocks} addTypename={false}>
+                <TriviaResultsWithoutHocs navigation={this.navigationMock} />
+            </MockedProvider>
+        )
+        await wait(0);
+        
+        screen.root.findAllByType(TouchableHighlight)[0].props.onPress();
+        expect(this.navigationMock.navigate.mock.calls.length).toBe(1);
+    });
 });
 
