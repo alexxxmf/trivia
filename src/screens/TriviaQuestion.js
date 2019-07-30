@@ -35,6 +35,7 @@ import { ADD_ANSWER } from '../apollo/mutations';
 
 import QuestionCard from '../components/QuestionCard';
 
+
 class TriviaQuestion extends Component {
     state = {
         step: 0,
@@ -64,7 +65,7 @@ class TriviaQuestion extends Component {
             <Query query={QUERY_GET_TRIVIA}>
                 {({data, loading, client, refetch}) => {
                     if (loading) {
-                        //TODO: create component for loading status
+
                         return (
                             <SafeAreaView style={ApplicationStyles.mainContainer}>
                                 <ActivityIndicator size="large" color={Colors.white}/>
@@ -73,7 +74,7 @@ class TriviaQuestion extends Component {
                     };
 
                     const questionData = data.getTrivia.results[this.state.step]
-                    console.log(data.getTrivia)
+
                     return (
                         <SafeAreaView style={ApplicationStyles.mainContainer}>
                             <QuestionCard

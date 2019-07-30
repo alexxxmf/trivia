@@ -4848,6 +4848,13 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
+mock-env@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/mock-env/-/mock-env-0.2.0.tgz#043f6bbf817cd0d5ca58a6d64e647142adfb353c"
+  integrity sha1-BD9rv4F80NXKWKbWTmRxQq37NTw=
+  dependencies:
+    has "^1.0.1"
+
 moo@^0.4.3:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/moo/-/moo-0.4.3.tgz#3f847a26f31cf625a956a87f2b10fbc013bfd10e"

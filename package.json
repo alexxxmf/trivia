@@ -23,6 +23,7 @@
     "graphql-anywhere": "^4.2.4",
     "graphql-tag": "^2.10.1",
     "install": "^0.13.0",
+    "mock-env": "^0.2.0",
     "qs": "^6.7.0",
     "react": "16.8.6",
     "react-adopt": "^0.6.0",
